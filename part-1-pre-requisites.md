@@ -39,11 +39,6 @@ brew install curl wget httpie
 sudo apt install curl wget netcat dnsutils
 ```
 
-To test pod-to-pod communication later:
-```bash
-kubectl run testbox --image=busybox:1.35 --rm -it -- /bin/sh
-```
-
 ### ✅ (Optional) Install Ingress Controller (to be used in part 6)
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
