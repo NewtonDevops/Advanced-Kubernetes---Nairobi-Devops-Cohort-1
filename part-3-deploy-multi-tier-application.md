@@ -118,6 +118,26 @@ kubectl apply -f frontend.yaml
 
 ---
 
+### 🔍 Inspect Logs or Describe a Pod
+
+To view logs from a Pod:
+```bash
+kubectl logs <pod-name> -n adv-net-lab
+```
+
+To describe the details of a Pod:
+```bash
+kubectl describe pod <pod-name> -n adv-net-lab
+```
+This shows metadata, events, container status, restart counts, and reasons for failures.
+
+---
+To rollout restart a deployment
+```bash
+kubectl rollout restart deploy <deployment-name>
+```
+---
+
 ### ✅ Step 3: Test Internal Communication
 
 Use a temporary test Pod to simulate traffic:
