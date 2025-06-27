@@ -140,11 +140,37 @@ kubectl rollout restart deploy <deployment-name>
 
 ### ✅ Step 3: Test Internal Communication
 
-Use a temporary test Pod to simulate traffic:
-```bash
-kubectl run testbox --image=busybox --rm -it -- /bin/sh
+Create a deployment for testing
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testbox
+  namespace: adv-net-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testbox
+  template:
+    metadata:
+      labels:
+        app: testbox
+    spec:
+      containers:
+      - name: testbox
+        image: busybox:1.35
+        command: ["sleep", "3600"]
+
 ```
-Inside the testbox shell:
+Exec inside the pod
+``` sh
+kubectl exec -it <pod-name> -- sh
+```
+
+Test the backend service 
+
 ```sh
 nslookup backend
 wget -qO- backend:8080
