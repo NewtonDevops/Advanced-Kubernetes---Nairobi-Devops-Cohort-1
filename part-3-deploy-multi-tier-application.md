@@ -1,6 +1,30 @@
 ## ⚙️ Part 3: Deploy Multi-Tier Application
 
 With the networking foundation covered, let's deploy a simple multi-tier application to see Kubernetes networking in action.
+### Architecture
+```mermaid
+flowchart LR
+    subgraph Outside[Outside World]
+      User[User / Browser]
+    end
+
+    User -- HTTP/HTTPS --> Ingress[Ingress Controller]
+    Ingress -- routes --> svcFrontend[Service: frontend]
+    svcFrontend -- selects --> podFront1[(Pod)]
+    svcFrontend -- selects --> podFront2[(Pod)]
+    podFront1 -- REST --> svcBackend[Service: backend]
+    podFront2 -- REST --> svcBackend
+    svcBackend -- selects --> podBack1[(Pod)]
+    svcBackend -- selects --> podBack2[(Pod)]
+
+    classDef svc fill:#a2d9ff,stroke:#0366d6,stroke-width:1px,color:#000;
+    classDef pod fill:#c0f5d9,stroke:#22863a,stroke-width:1px,color:#000;
+
+    class svcFrontend,svcBackend svc;
+    class podFront1,podFront2,podBack1,podBack2 pod;
+```
+
+*Legend*: External traffic enters through **Ingress**, reaches a **Service** which load‑balances to healthy **Pods**.  Internal calls cascade through additional Services.  **NetworkPolicies** (not shown) restrict who can talk to whom, and the **CNI plugin** wires the packets
 
 This setup includes:
 - A **backend** pod responding on HTTP
