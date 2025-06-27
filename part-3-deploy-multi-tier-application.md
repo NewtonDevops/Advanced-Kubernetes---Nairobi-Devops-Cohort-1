@@ -36,7 +36,6 @@ This setup includes:
 ### ✅ Step 1: Create the Backend Deployment and Service
 
 ```yaml
-# backend.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -80,7 +79,6 @@ kubectl apply -f backend.yaml
 ### ✅ Step 2: Create the Frontend Deployment and Service
 
 ```yaml
-# frontend.yaml
 apiVersion: v1
 kind: Service
 metadata:
