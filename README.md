@@ -8,7 +8,7 @@ Welcome to the **Advanced Kubernetes Networking Lab**. This guide walks you thro
 
 Each section builds upon the last, so it's best to follow them in order:
 
-1. [Part 1: Pre-requisites](#-part-1-pre-requisites)
+1. [Part 1: Pre-requisites](part-1-pre-requisites.md)
 2. [Part 2: Kubernetes Networking Concepts](#-part-2-kubernetes-networking-concepts)
 3. [Part 3: Deploy Multi-Tier Application](#-part-3-deploy-multi-tier-application)
 4. [Part 4: Explore Kubernetes Service Types](#-part-4-explore-kubernetes-service-types)
