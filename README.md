@@ -23,28 +23,66 @@ Before we jump into advanced networking, here’s a 60‑second refresher on the
 ### 📈 Big‑Picture Diagram
 
 ```mermaid
-flowchart LR
-    subgraph Outside[Outside World]
-      User[User / Browser]
-    end
+flowchart TD
 
-    User -- HTTP/HTTPS --> Ingress[Ingress Controller]
-    Ingress -- routes --> svcFrontend[Service: frontend]
-    svcFrontend -- selects --> podFront1[(Pod)]
-    svcFrontend -- selects --> podFront2[(Pod)]
-    podFront1 -- REST --> svcBackend[Service: backend]
-    podFront2 -- REST --> svcBackend
-    svcBackend -- selects --> podBack1[(Pod)]
-    svcBackend -- selects --> podBack2[(Pod)]
+  subgraph Control_Plane
+    etcd[(etcd DB)] --> APIServer[Kubernetes API Server]
+    Scheduler[Scheduler] --> APIServer
+    Controller[Controller Manager] --> APIServer
+  end
 
-    classDef svc fill:#a2d9ff,stroke:#0366d6,stroke-width:1px,color:#000;
-    classDef pod fill:#c0f5d9,stroke:#22863a,stroke-width:1px,color:#000;
+  APIServer --> Node1[Kubernetes Node 1 - kubelet + kube-proxy]
+  APIServer --> Node2[Kubernetes Node 2 - kubelet + kube-proxy]
 
-    class svcFrontend,svcBackend svc;
-    class podFront1,podFront2,podBack1,podBack2 pod;
+  Node1 --> Pod1[(Pod: app1)]
+  Node1 --> Pod2[(Pod: app2)]
+  Node2 --> Pod3[(Pod: app3)]
+
+  subgraph Virtualization_Layer
+    VM1[VM 1: Linux Host] --> Node1
+    VM2[VM 2: Linux Host] --> Node2
+  end
 ```
 
-*Legend*: External traffic enters through **Ingress**, reaches a **Service** which load‑balances to healthy **Pods**.  Internal calls cascade through additional Services.  **NetworkPolicies** (not shown) restrict who can talk to whom, and the **CNI plugin** wires the packets.
+**Summary of Components:**
+
+### 🧱 Control Plane
+The **Kubernetes control plane** is the brain of the cluster. It manages the lifecycle of applications, scheduling, scaling, networking, and maintaining the desired state.
+
+- **API Server**: The front-end to the control plane. It exposes the Kubernetes API and handles all internal and external communication with the cluster.
+- **Scheduler**: Assigns Pods to Nodes based on resource requirements and availability.
+- **Controller Manager**: Reconciles the cluster’s actual state with the desired state (e.g., rescheduling a failed Pod).
+- **etcd**: A consistent and highly available key-value store used to persist all cluster configuration and state.
+
+All communication flows through the API Server, which acts as the central hub.
+
+### 🖥️ Virtualization Layer
+The **Virtualization Layer** represents the infrastructure that runs the Kubernetes nodes. These can be:
+
+- Virtual Machines (e.g., using Docker Desktop, VirtualBox, or a cloud provider like AWS/GCP/Azure)
+- Bare-metal servers (in on-premise data centers)
+
+Each VM/host runs one or more **Kubernetes nodes**.
+
+- **VM / Linux Host**: The physical or virtual machines running your cluster. These form the base layer of the infrastructure (often managed by cloud providers or local virtualization like Docker Desktop).
+
+- **Kubernetes Node**: A worker machine (VM or physical) that runs Pods. Each node runs:
+  - `kubelet`: an agent that communicates with the Kubernetes control plane and ensures containers are running.
+  - `kube-proxy`: a network proxy that maintains network rules for Pod communication and implements Kubernetes Services networking.
+
+- **Pod**: The smallest deployable unit in Kubernetes. Each pod holds one or more containers that share the same network namespace. They are ephemeral and scheduled by controllers.
+
+- **API Server**: The front-end of the Kubernetes control plane. It exposes the Kubernetes API and is the main interface for all cluster operations.
+
+- **Controller Manager**: Handles background tasks such as managing node status, ensuring desired state for Deployments, and managing endpoints.
+
+- **Scheduler**: Assigns newly created Pods to Nodes based on resource requirements, policies, and availability.
+
+- **etcd**: A distributed key-value store that stores all cluster data. It acts as the single source of truth for the cluster state.
+
+All components communicate via the API Server. Nodes do not communicate directly with `etcd`.
+
+Pods are deployed through declarative resources (like Deployments), and the control plane ensures their desired state is maintained.
 
 ---
 
