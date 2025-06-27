@@ -30,6 +30,7 @@ kubectl create namespace adv-net-lab
 kubectl config set-context --current --namespace=adv-net-lab
 ```
 
+
 ### ✅ DNS/Network Tools (Optional but helpful)
 ```bash
 # macOS
@@ -49,7 +50,34 @@ Wait until it's ready:
 kubectl get pods -n ingress-nginx -w
 ```
 
----
+### ✅ Useful commands:
+
+```bash
+# more details per pod
+kubectl get pods -n adv-net-lab -o wide
+```
+
+To check the current context:
+```bash
+kubectl config current-context
+kubectl config view --minify
+```
+
+To list all available contexts:
+```bash
+kubectl config get-contexts
+```
+
+### 📊 Check Pod Status
+Get the status of all Pods in the lab namespace:
+```bash
+kubectl get pods -n adv-net-lab
+```
+
+Or view them with more detail:
+```bash
+kubectl get pods -n adv-net-lab -o wide
+```
 
 ✅ Done with setup!
 
