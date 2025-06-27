@@ -24,7 +24,7 @@ flowchart LR
     class podFront1,podFront2,podBack1,podBack2 pod;
 ```
 
-*Legend*: External traffic enters through **Ingress**, reaches a **Service** which load‑balances to healthy **Pods**.  Internal calls cascade through additional Services.  **NetworkPolicies** (not shown) restrict who can talk to whom, and the **CNI plugin** wires the packets
+External traffic enters through **Ingress**, reaches a **Service** which load‑balances to healthy **Pods**.  Internal calls cascade through additional Services.  **NetworkPolicies** (not shown) restrict who can talk to whom, and the **CNI plugin** wires the packets
 
 This setup includes:
 - A **backend** pod responding on HTTP
