@@ -1,22 +1,28 @@
-## 🚧 Part 1: Pre-requisites
+# 🚧 Part 1: Pre-requisites (Minikube Edition)
 
-Before diving into Kubernetes networking, ensure you have the right tools and setup. This section helps you prepare your environment to run all upcoming examples.
+Before diving into Kubernetes networking, ensure you have the right tools and setup. This section helps you prepare your environment to run all upcoming examples using **Minikube**.
 
-### ✅ Required Tools
+---
 
-| Tool | Purpose | Install Link |
-|------|---------|--------------|
-| Docker Desktop | Local Kubernetes cluster | https://www.docker.com/products/docker-desktop |
-| kubectl | CLI to interact with Kubernetes | https://kubernetes.io/docs/tasks/tools/#kubectl |
-| YAML Editor | For manifest files (e.g. VS Code) | https://code.visualstudio.com/ |
-| curl / wget | Test HTTP endpoints | Usually preinstalled |
-| K9s or Lens (optional) | Kubernetes UI tool | https://k9scli.io/ or https://k8slens.dev/ |
+## ✅ Required Tools
 
-### ✅ Enable Kubernetes on Docker Desktop
-1. Open Docker Desktop
-2. Go to **Settings > Kubernetes**
-3. Enable the **"Enable Kubernetes"** checkbox
-4. Apply and restart
+| Tool                  | Purpose                         | Install Link                                                |
+|-----------------------|----------------------------------|--------------------------------------------------------------|
+| Minikube              | Local Kubernetes cluster         | https://minikube.sigs.k8s.io/docs/start/                     |
+| kubectl               | CLI to interact with Kubernetes  | https://kubernetes.io/docs/tasks/tools/#kubectl             |
+| YAML Editor           | For manifest files (e.g. VS Code)| https://code.visualstudio.com/                              |
+| curl / wget           | Test HTTP endpoints              | Usually preinstalled                                         |
+| K9s or Lens (optional)| Kubernetes UI tool               | https://k9scli.io/ or https://k8slens.dev/                  |
+
+---
+
+## ✅ Start Minikube
+
+Install and start your local Kubernetes cluster:
+
+```bash
+  minikube start --cni=calico --memory=4g --cpus=2 # use calico cni for Networking
+```
 
 Verify installation:
 ```bash
@@ -40,15 +46,12 @@ brew install curl wget httpie
 sudo apt install curl wget netcat dnsutils
 ```
 
-### ✅ (Optional) Install Ingress Controller (to be used in part 6)
+### ✅ Enable Ingress (to be used in part 6)
+
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+minikube addons enable ingress
 ```
 
-Wait until it's ready:
-```bash
-kubectl get pods -n ingress-nginx -w
-```
 
 ### ✅ Useful commands:
 
