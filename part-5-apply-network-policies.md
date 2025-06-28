@@ -20,15 +20,14 @@ wget --timeout=2 backend:8080
 This will block all incoming traffic to Pods **unless explicitly allowed**.
 
 ```yaml
-# default-deny.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: deny-all
 spec:
-  podSelector: {}
+  podSelector: {} # targets all pods in the namespace.
   policyTypes:
-  - Ingress
+  - Ingress # Applies to incoming traffic
 ```
 
 ```bash
