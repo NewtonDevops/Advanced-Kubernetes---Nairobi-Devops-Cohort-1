@@ -146,20 +146,20 @@ Create a deployment for testing
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: testbox
+  name: testbox-allow
   namespace: adv-net-lab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testbox
+      app: testbox-allow
   template:
     metadata:
       labels:
-        app: testbox
+        app: testbox-allow
     spec:
       containers:
-      - name: testbox
+      - name: testbox-allow
         image: busybox:1.35
         command: ["sleep", "3600"]
 
