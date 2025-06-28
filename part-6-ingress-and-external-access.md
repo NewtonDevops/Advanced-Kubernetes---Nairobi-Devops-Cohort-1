@@ -1,21 +1,54 @@
-## 🌐 Part 6: Ingress and External Access
+# 🚪 Part 6: Ingress and Network Policies
 
-Kubernetes **Ingress** allows you to expose HTTP and HTTPS routes from outside the cluster to Services inside the cluster. It's a smart router for your Kubernetes apps.
-
-> Requires an **Ingress Controller** (e.g., NGINX) to be installed in the cluster.
+In this section, you'll learn how to expose services to the outside world using **Ingress** and how to secure Pod communication with **NetworkPolicies**.
 
 ---
 
-### ✅ 1. Install Ingress Controller (if not already)
+## 🌐 Ingress in Minikube
 
-If you haven't installed it yet:
+Minikube includes a built-in **Ingress Controller** via an addon. You should have enabled it in Part 1. If not:
+
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+minikube addons enable ingress
 ```
 
-Wait for the controller to be ready:
+---
+### ✅ 1. Deploy a Sample App
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+```
+
 ```bash
-kubectl get pods -n ingress-nginx -w
+kubectl apply -f nginx-deployment.yaml
 ```
 
 ---
@@ -25,24 +58,26 @@ kubectl get pods -n ingress-nginx -w
 We will expose the frontend via a DNS path.
 
 ```yaml
-# ingress.yaml
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frontend-ingress
+  name: nginx-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  - host: nginx.local
+    http:
       paths:
-      - path: /frontend
+      - path: /
         pathType: Prefix
         backend:
           service:
-            name: frontend
+            name: nginx-service
             port:
               number: 80
+
 ```
 
 Apply it:
@@ -52,48 +87,42 @@ kubectl apply -f ingress.yaml
 
 ---
 
-### ✅ 3. Test Ingress Access
+## Confirm the ingress
 
-Get the Ingress controller's external IP:
 ```bash
-kubectl get svc -n ingress-nginx ingress-nginx-controller
+kubectl get svc ingress-nginx-controller -n ingress-nginx
 ```
 
-Assuming `localhost`, test it:
+Output should be similar to
+
 ```bash
-curl http://localhost/frontend
+NAME                       TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+ingress-nginx-controller   NodePort   10.103.59.66   <none>        80:32002/TCP,443:30866/TCP   13m
 ```
+By default, Minikube installs the ingress-nginx-controller as a NodePort service, which:
+- Does not assign an EXTERNAL-IP
+- Exposes high-numbered ports (like 30000–32767) instead of port 80
+- Requires curl ``` http://<minikube-ip>:<node-port>``` — which your browser/DNS won't use
 
-✅ You should receive an NGINX welcome page or error (depending on frontend setup).
+## 💡 Why Does This Happen?
 
----
+Kubernetes relies on a **cloud provider** or **load balancer controller** to allocate an external IP address for `LoadBalancer`-type services.
 
-### ✅ 4. Bonus: Custom Domain (Optional)
+In local environments like Minikube, this functionality is not available out-of-the-box.  
+To simulate it, Minikube provides a special routing process using:
 
-To use a custom domain (e.g., `myapp.local`):
+### ✅ Solution: Patch the Service + Run Tunnel
+Convert the Ingress controller's service to LoadBalancer:
 
-1. Add to `/etc/hosts`:
-   ```bash
-   127.0.0.1 myapp.local
-   ```
-2. Update `ingress.yaml`:
-   ```yaml
-   rules:
-   - host: myapp.local
-     http:
-       paths:
-       - path: /
-         pathType: Prefix
-         backend:
-           service:
-             name: frontend
-             port:
-               number: 80
-   ```
-3. Access it:
-   ```bash
-   curl http://myapp.local/
-   ```
+```bash
+kubectl patch svc ingress-nginx-controller -n ingress-nginx \
+  -p '{"spec": {"type": "LoadBalancer"}}'
+```
+Then, in a separate terminal window, start the Minikube tunnel:
+
+```bash
+minikube tunnel
+```
 
 ---
 
