@@ -86,6 +86,7 @@ Test using the EXTERNAL-IP:
 curl http://<EXTERNAL-IP>
 ```
 
+#### Learn more about setting up metalLB [here](https://medium.com/@shoaib_masood/metallb-network-loadbalancer-minikube-335d846dfdbe)
 ---
 
 ### 🔸 Headless Service
