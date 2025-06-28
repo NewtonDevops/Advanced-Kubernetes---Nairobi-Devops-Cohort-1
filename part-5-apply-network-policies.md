@@ -74,6 +74,17 @@ kubectl exec deploy/frontend -- wget --timeout=2 backend:8080
 
 ---
 
+### Additional commands
+List network policies
+```bash
+kubectl get networkpolicy -n <namespace>
+```
+Cluster wide
+
+```bash
+kubectl get networkpolicy --all-namespaces
+```
+
 ### ✅ Summary Table
 
 | Policy Type     | Description                            |
