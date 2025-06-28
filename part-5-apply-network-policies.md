@@ -45,7 +45,6 @@ wget --timeout=2 backend:8080
 Now create a rule that **only allows traffic from the frontend Pods** to the backend.
 
 ```yaml
-# allow-frontend.yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
