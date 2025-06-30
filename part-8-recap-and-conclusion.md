@@ -127,5 +127,29 @@ helm dependency build
 
 ---
 
+---
+
+### 🎓 What You’ve Learned
+
+✅ Core networking components (Pods, Services, CNI, NetworkPolicies)  
+✅ Service exposure types (ClusterIP, NodePort, LoadBalancer, Headless)  
+✅ Use and enforcement of Network Policies for secure communication  
+✅ Configuring Ingress to expose apps via URLs or domains
+
+---
+
+### 📚 Next Steps
+
+- Explore CNI plugins like Calico or Cilium in Minikube/kind
+- Add TLS to your Ingress
+- Use cert-manager to automate certificate provisioning
+- Try service mesh tools like Istio or Linkerd
+
+---
+
+👏 Great work completing this advanced Kubernetes networking lab!
+
+Want more labs like this? Star or fork this repo and try contributing!
+
 
 
