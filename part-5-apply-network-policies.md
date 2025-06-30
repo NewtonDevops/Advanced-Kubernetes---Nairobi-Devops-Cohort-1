@@ -40,14 +40,14 @@ wget -qO- --timeout=2 backend:8080
 
 ---
 
-### ✅ Step 3: Allow Traffic from Frontend Only
-Now create a rule that **only allows traffic from the frontend Pods** to the backend.
+### ✅ Step 3: Allow Traffic from testbox-allow pods only
+Now create a rule that **only allows traffic from the testbox-allow Pods** to the backend.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-frontend-to-backend
+  name: allow-testbox-to-backend
 spec:
   podSelector:
     matchLabels:
@@ -56,18 +56,19 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          app: frontend
+          app: testbox-allow
   policyTypes:
   - Ingress
 ```
 
 ```bash
-kubectl apply -f allow-frontend.yaml
+kubectl apply -f allow-testbox.yaml
 ```
 
-✅ Retest from the frontend Pod:
+✅ Retest from the textbox-allow Pod:
 ```bash
-kubectl exec deploy/frontend -- wget --timeout=2 backend:8080
+kubectl exec deploy/testbox-allow -- sh
+wget -qO- --timeout=2 backend:8080
 ```
 ✅ You should get a success response.
 
