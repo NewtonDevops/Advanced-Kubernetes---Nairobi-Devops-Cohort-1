@@ -125,14 +125,13 @@ ingress-nginx-controller   NodePort   10.103.59.66   <none>        80:32002/TCP,
 By default, Minikube installs the ingress-nginx-controller as a NodePort service, which:
 - Does not assign an EXTERNAL-IP
 - Exposes high-numbered ports (like 30000–32767) instead of port 80
-- Requires curl ``` http://<minikube-ip>:<node-port>``` — which your browser/DNS won't use
 
 ## 💡 Why Does This Happen?
 
 Kubernetes relies on a **cloud provider** or **load balancer controller** to allocate an external IP address for `LoadBalancer`-type services.
 
 In local environments like Minikube, this functionality is not available out-of-the-box.  
-To simulate it, Minikube provides a special routing process using:
+To simulate it, we will use port forwarding
 
 ### ✅ Solution: Port forwarding
 Port forward ingress service:
