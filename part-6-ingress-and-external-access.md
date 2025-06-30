@@ -21,6 +21,11 @@ kubectl get po
 Output should show all the pods running
 
 ```bash
+NAME                             READY   STATUS    RESTARTS   AGE
+backend-78b696fbd4-4bddp         1/1     Running   0          81m
+frontend-764f75976d-jjhq2        1/1     Running   0          58m
+testbox-allow-597c5559b8-7sgvf   1/1     Running   0          55m
+testbox-deny-75d68bf895-75qx9    1/1     Running   0          54m
 ```
 
 ---
