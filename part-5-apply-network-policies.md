@@ -67,7 +67,7 @@ kubectl apply -f allow-testbox.yaml
 
 ✅ Retest from the textbox-allow Pod:
 ```bash
-kubectl exec deploy/testbox-allow -- sh
+kubectl exec <pod-name> -- sh
 wget -qO- --timeout=2 backend:8080
 ```
 ✅ You should get a success response.
