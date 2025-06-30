@@ -15,17 +15,48 @@ minikube addons enable ingress
 ---
 ### ✅ 1. Confirm the apps(frontend and backend) are deployed: (Step 3)
 ```bash
-kubectl get po
+kubectl get all --all-namespaces
 
 ```
-Output should show all the pods running
+The output should show details of all our deployments, services and pods
 
-```bash
-NAME                             READY   STATUS    RESTARTS   AGE
-backend-78b696fbd4-4bddp         1/1     Running   0          81m
-frontend-764f75976d-jjhq2        1/1     Running   0          58m
-testbox-allow-597c5559b8-7sgvf   1/1     Running   0          55m
-testbox-deny-75d68bf895-75qx9    1/1     Running   0          54m
+```pgsql
+# All running pods
+NAMESPACE       NAME                                            READY   STATUS      RESTARTS        AGE
+adv-net-lab     pod/backend-78b696fbd4-kndf8                    1/1     Running     0               41m
+adv-net-lab     pod/frontend-77d7d6f757-k58xn                   1/1     Running     0               41m
+adv-net-lab     pod/testbox-allow-597c5559b8-qnb5l              1/1     Running     0               41m
+adv-net-lab     pod/testbox-deny-75d68bf895-rb85p               1/1     Running     0               41m
+ingress-nginx   pod/ingress-nginx-admission-create-z25pw        0/1     Completed   0               92m
+ingress-nginx   pod/ingress-nginx-admission-patch-7cnn6         0/1     Completed   1               92m
+ingress-nginx   pod/ingress-nginx-controller-6d976d9695-xq8ps   1/1     Running     0               92m
+kube-system     pod/calico-kube-controllers-755fd895c4-28kps    1/1     Running     3 (6h46m ago)   2d10h
+
+...
+
+# All services
+
+NAMESPACE       NAME                                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+adv-net-lab     service/backend                              ClusterIP   10.104.199.209   <none>        8080/TCP                     41m
+adv-net-lab     service/frontend                             ClusterIP   10.98.156.42     <none>        80/TCP                       41m
+adv-net-lab     service/nodeport-service                     NodePort    10.100.139.88    <none>        8080:30080/TCP               22m
+default         service/kubernetes                           ClusterIP   10.96.0.1        <none>        443/TCP                      2d10h
+ingress-nginx   service/ingress-nginx-controller             NodePort    10.98.253.229    <none>        80:31789/TCP,443:30896/TCP   92m
+ingress-nginx   service/ingress-nginx-controller-admission   ClusterIP   10.103.39.252    <none>        443/TCP                      92m
+
+...
+
+# All Deployments
+
+NAMESPACE       NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
+adv-net-lab     deployment.apps/backend                    1/1     1            1           41m
+adv-net-lab     deployment.apps/frontend                   1/1     1            1           41m
+adv-net-lab     deployment.apps/testbox-allow              1/1     1            1           41m
+adv-net-lab     deployment.apps/testbox-deny               1/1     1            1           41m
+ingress-nginx   deployment.apps/ingress-nginx-controller   1/1     1            1           92m
+
+...
+
 ```
 
 ---
