@@ -185,4 +185,19 @@ wget -qO- backend:8080
 
 ---
 
+### 🎯 Deployment via Helm
+Rather than write raw Kubernetes YAML files, we’ll deploy the multi-tier app using a Helm chart.
+
+📦 Source Code & Helm Charts
+🔗 https://github.com/NewtonDevops/helm-multi-tier-app
+
+That repo contains:
+
+Helm chart structure with frontend, backend, and testboxes as subcharts
+
+Docker build instructions for the backend
+
+Values templates to configure and redeploy
+
+
 ➡️ [Continue to Part 4: Explore Kubernetes Service Types](part-4-explore-kubernetes-service-types.md)
