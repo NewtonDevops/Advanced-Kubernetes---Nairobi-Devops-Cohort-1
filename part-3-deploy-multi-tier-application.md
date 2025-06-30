@@ -34,7 +34,7 @@ External traffic enters through **Ingress**, reaches a **Service** which load‑
 
 This setup includes:
 - A **backend** pod responding on HTTP
-- A **frontend** pod (nginx) acting as a consumer
+- A **frontend** pod acting as a consumer
 - A **test pod** to simulate internal access
 
 ---
