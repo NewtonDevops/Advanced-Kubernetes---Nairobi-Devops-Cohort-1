@@ -97,3 +97,23 @@ Each section builds upon the last, so it's best to follow them in order:
 5. [Part 5: Apply Network Policies](part-5-apply-network-policies.md)
 6. [Part 6: Ingress and External Access](part-6-ingress-and-external-access.md)
 7. [Part 7: Cleanup and Conclusion](part-7-cleanup-and-conclusion.md)
+
+
+---
+
+## 👨‍💻 Author
+
+**Newton Bii**  
+Engineering Manager | DevOps | Kubernetes Trainer | Cloud Engineer  
+[GitHub: NewtonDevops](https://github.com/NewtonDevops)  
+[LinkedIn](https://www.linkedin.com/in/newton-bii-engineer/)
+
+---
+
+## 📄 License
+
+This project is licensed under the terms of the **MIT License**.
+
+You are free to use, modify, and redistribute this software for educational, personal, or commercial purposes with proper attribution.
+
+See the [LICENSE.md](./LICENSE.md) file for full license text.
