@@ -96,7 +96,7 @@ Each section builds upon the last, so it's best to follow them in order:
 4. [Part 4: Explore Kubernetes Service Types](part-4-explore-kubernetes-service-types.md)
 5. [Part 5: Apply Network Policies](part-5-apply-network-policies.md)
 6. [Part 6: Ingress and External Access](part-6-ingress-and-external-access.md)
-7. [Part 7: Cleanup](part-7-cleanup-and-conclusion.md)
+7. [Part 7: Cleanup](part-7-cleanup.md)
 8. [Part 8: Recap and Conclusion](part-8-recap-and-conclusion.md)
 
 
