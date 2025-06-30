@@ -2,8 +2,6 @@
 
 With the networking foundation covered, let's deploy a simple multi-tier application to see Kubernetes networking in action.
 
-Before we begin we will need to build our backend image for us to use.
-You can access the code and instructions [here](https://github.com/NewtonDevops/python-backend)
 
 ---
 
