@@ -31,36 +31,41 @@ We will expose the frontend via a DNS path.
 
 ```yaml
 
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: networking.k8s.io/v1  # Specifies the Ingress API version
+kind: Ingress                     # Defines the resource kind as Ingress
 metadata:
-  name: ingress-nginx
-  namespace: adv-net-lab
+  name: ingress-nginx            # Name of the Ingress resource
+  namespace: adv-net-lab         # Namespace where this Ingress is deployed
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrites incoming request paths to /
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx        # IngressClass to use (NGINX controller)
   rules:
-    - host: nginx.local
+    - host: nginx.local          # Hostname for the Ingress (e.g. nginx.local in /etc/hosts)
       http:
         paths:
-          - path: /frontend
-            pathType: Prefix
+          - path: /frontend      # Route traffic from /frontend path
+            pathType: Prefix     # Match all paths that start with /frontend
             backend:
               service:
-                name: frontend
+                name: frontend   # Forward to the frontend service
                 port:
-                  number: 80
-          - path: /backend
-            pathType: Prefix
+                  number: 80     # On port 80 of the service
+
+          - path: /backend       # Route traffic from /backend path
+            pathType: Prefix     # Match all paths that start with /backend
             backend:
               service:
-                name: backend
+                name: backend    # Forward to the backend service
                 port:
-                  number: 8080
+                  number: 8080   # On port 8080 of the service
+
 
 
 ```
+
+🧩 Key Components
+Field	Description
 
 Apply it:
 ```bash
