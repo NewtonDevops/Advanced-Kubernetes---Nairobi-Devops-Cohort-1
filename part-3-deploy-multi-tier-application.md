@@ -41,6 +41,8 @@ This setup includes:
 
 ### ✅ Step 1: Create the Backend Deployment and Service
 
+You will need to clone and build the sample backend service from [here](https://github.com/NewtonDevops/python-backend)
+
 ```yaml
 apiVersion: v1
 kind: Service
