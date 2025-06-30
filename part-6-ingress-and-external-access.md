@@ -173,4 +173,4 @@ You should be able to see the frontend page
 
 ---
 
-➡️ [Continue to Part 7: Cleanup and Conclusion](part-7-cleanup-and-conclusion.md)
+➡️ [Continue to Part 7: Cleanup and Conclusion](part-7-cleanup.md)
