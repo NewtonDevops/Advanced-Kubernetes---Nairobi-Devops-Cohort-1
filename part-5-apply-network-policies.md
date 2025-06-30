@@ -9,7 +9,7 @@ By default, all traffic between Pods is allowed. Applying a `NetworkPolicy` rest
 ### ✅ Step 1: Verify Current Connectivity
 Ensure your Pods can communicate freely:
 ```bash
-wget --timeout=2 backend:8080
+wget -qO- --timeout=2 backend:8080
 ```
 ✅ You should see a response like "Hello from backend"
 
