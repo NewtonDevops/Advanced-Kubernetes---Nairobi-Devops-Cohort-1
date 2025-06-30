@@ -26,6 +26,12 @@ kubectl delete pod testbox --ignore-not-found
 
 ### If deployed via helm chart
 
+All you need is to run 1 command
+
 ```bash
 helm uninstall demo
 ```
+
+---
+
+➡️ [Finally 7: Recap and Conclusion](part-8-recap-and-conclusion.md)
