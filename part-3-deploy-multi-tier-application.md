@@ -1,6 +1,12 @@
 ## ⚙️ Part 3: Deploy Multi-Tier Application
 
 With the networking foundation covered, let's deploy a simple multi-tier application to see Kubernetes networking in action.
+
+Before we begin we will need to build our backend image for us to use.
+You can access the code and instructions [here]()
+
+---
+
 ### Architecture
 ```mermaid
 flowchart LR
@@ -52,7 +58,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -63,8 +69,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: hashicorp/http-echo
-        args: ["-text=Hello from backend"]
+        image: python-backend:latest
         ports:
         - containerPort: 8080
 ```
