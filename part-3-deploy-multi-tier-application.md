@@ -70,6 +70,7 @@ spec:
       containers:
       - name: backend
         image: python-backend:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
 ```
