@@ -35,7 +35,7 @@ kubectl apply -f default-deny.yaml
 
 🔒 Now try reaching the backend again — it should fail:
 ```bash
-wget --timeout=2 backend:8080
+wget -qO- --timeout=2 backend:8080
 ```
 
 ---
