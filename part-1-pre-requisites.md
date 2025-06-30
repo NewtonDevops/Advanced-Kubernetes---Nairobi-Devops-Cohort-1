@@ -6,13 +6,14 @@ Before diving into Kubernetes networking, ensure you have the right tools and se
 
 ## ✅ Required Tools
 
-| Tool                  | Purpose                         | Install Link                                                |
-|-----------------------|----------------------------------|--------------------------------------------------------------|
-| Minikube              | Local Kubernetes cluster         | https://minikube.sigs.k8s.io/docs/start/                     |
-| kubectl               | CLI to interact with Kubernetes  | https://kubernetes.io/docs/tasks/tools/#kubectl             |
-| YAML Editor           | For manifest files (e.g. VS Code)| https://code.visualstudio.com/                              |
-| curl / wget           | Test HTTP endpoints              | Usually preinstalled                                         |
-| K9s or Lens (optional)| Kubernetes UI tool               | https://k9scli.io/ or https://k8slens.dev/                  |
+| Tool           | Purpose                         | Install Link                                         |
+|----------------|----------------------------------|------------------------------------------------------|
+| Minikube       | Local Kubernetes cluster        | https://minikube.sigs.k8s.io/docs/start/             |
+| kubectl        | CLI to interact with Kubernetes | https://kubernetes.io/docs/tasks/tools/#kubectl      |
+| Helm           | Kubernetes package manager      | https://helm.sh/docs/intro/install/                  |
+| YAML Editor    | Edit manifest files (VS Code)   | https://code.visualstudio.com/                       |
+| curl / wget    | HTTP testing tools              | Usually pre-installed                                |
+| httpie         | Friendly CLI HTTP client        | https://httpie.io                                   |
 
 ---
 
