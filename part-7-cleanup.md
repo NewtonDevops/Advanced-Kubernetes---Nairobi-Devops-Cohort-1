@@ -4,7 +4,7 @@ Now that you’ve explored and configured advanced networking in Kubernetes, it�
 
 ---
 
-### 🧼 Cleanup: Delete All Created Resources
+### 🧼 Cleanup: Delete All Created Resources (manually created)
 
 To remove all the resources created during this lab:
 ```bash
@@ -22,4 +22,10 @@ kubectl delete networkpolicy deny-all allow-frontend-to-backend
 Also remove any test pods (if still running):
 ```bash
 kubectl delete pod testbox --ignore-not-found
+```
+
+### If deployed via helm chart
+
+```bash
+helm uninstall demo
 ```
