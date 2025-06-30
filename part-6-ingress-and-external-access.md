@@ -13,42 +13,14 @@ minikube addons enable ingress
 ```
 
 ---
-### ✅ 1. Deploy a Sample App
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:stable
-        ports:
-        - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: nginx
-  ports:
-    - port: 80
-      targetPort: 80
+### ✅ 1. Confirm the apps(frontend and backend) are deployed: (Step 3)
+```bash
+kubectl get po
+
 ```
+Output should show all the pods running
 
 ```bash
-kubectl apply -f nginx-deployment.yaml
 ```
 
 ---
@@ -62,21 +34,31 @@ We will expose the frontend via a DNS path.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: ingress-nginx
+  namespace: adv-net-lab
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-  - host: nginx.local
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-service
-            port:
-              number: 80
+    - host: nginx.local
+      http:
+        paths:
+          - path: /frontend
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+          - path: /backend
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8080
+
 
 ```
 
@@ -111,18 +93,34 @@ Kubernetes relies on a **cloud provider** or **load balancer controller** to all
 In local environments like Minikube, this functionality is not available out-of-the-box.  
 To simulate it, Minikube provides a special routing process using:
 
-### ✅ Solution: Patch the Service + Run Tunnel
-Convert the Ingress controller's service to LoadBalancer:
+### ✅ Solution: Port forwarding
+Port forward ingress service:
 
 ```bash
-kubectl patch svc ingress-nginx-controller -n ingress-nginx \
-  -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl port-forward svc/ingress-nginx-controller -n ingress-nginx 8080:80
 ```
-Then, in a separate terminal window, start the Minikube tunnel:
+This means that your ingress will run on port 8080 on your local machine
+
+Since we configured ingress to be accessible via host ```nginx.local```. We will need to map ```nginx.local``` to resolve to ```127.0.0.1```
 
 ```bash
-minikube tunnel
+echo "127.0.0.1 nginx.local" | sudo tee -a /etc/hosts
 ```
+Use ping to make sure ```nginx.local``` is resolving to ```127.0.0.1```
+
+```bash
+PING nginx.local (127.0.0.1): 56 data bytes
+64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.086 ms
+```
+
+Finally, open your browser to 
+```bash
+http://nginx.local:8080/frontend
+```
+
+You should be able to see the frontend page
+
+
 
 ---
 
