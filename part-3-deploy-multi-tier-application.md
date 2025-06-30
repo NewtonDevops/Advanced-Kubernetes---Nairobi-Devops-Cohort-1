@@ -85,6 +85,8 @@ kubectl apply -f backend.yaml
 
 ### ✅ Step 2: Create the Frontend Deployment and Service
 
+You will need to build the frontend application [here](https://github.com/NewtonDevops/frontend-app/tree/main)
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -113,7 +115,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: nginx
+        image: frontend-app:latest
         ports:
         - containerPort: 80
 ```
