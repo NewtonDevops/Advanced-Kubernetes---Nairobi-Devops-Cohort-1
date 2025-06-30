@@ -190,18 +190,20 @@ wget -qO- backend:8080
 ---
 
 ### 🎯 Deployment via Helm
+#### 📦 What Is a Helm Chart?
+A Helm chart is a collection of files that describe a related set of Kubernetes resources. It contains all the necessary information to deploy an application, service, or tool into a Kubernetes cluster.
 Rather than write raw Kubernetes YAML files, we’ll deploy the multi-tier app using a Helm chart.
 
-📦 Source Code & Helm Charts
+#### 📦 Source Code & Helm Charts
 🔗 https://github.com/NewtonDevops/helm-multi-tier-app
 
 That repo contains:
 
-Helm chart structure with frontend, backend, and testboxes as subcharts
+- Helm chart structure with frontend, backend, and testboxes as subcharts
 
-Docker build instructions for the backend
+- Docker build instructions for the backend
 
-Values templates to configure and redeploy
+- Values templates to configure and redeploy
 
 
 ➡️ [Continue to Part 4: Explore Kubernetes Service Types](part-4-explore-kubernetes-service-types.md)
