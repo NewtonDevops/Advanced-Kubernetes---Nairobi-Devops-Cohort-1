@@ -57,7 +57,6 @@ minikube addons enable ingress
 ### ✅ Useful commands:
 
 ```bash
-# more details per pod
 kubectl get pods -n adv-net-lab -o wide
 ```
 
