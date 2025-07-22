@@ -2,6 +2,8 @@
 
 This guide walks you through installing **Cilium with Hubble** (observability UI), simulating traffic between pods, and visualizing it in the Hubble UI.
 
+Open ChatGpt and search ```eli5 ebpf and cilium```
+
 ---
 
 ## 🧱 Step 1: Start Minikube Without a Default CNI
